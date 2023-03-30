@@ -2,6 +2,7 @@ import type { Request, RequestHandler, Response } from 'express';
 import type { Planet } from '../models/planet.model';
 import {
   createPlanetService,
+  deletePlanetService,
   getPlanetsService
 } from '../services/solarsys.service';
 
@@ -23,4 +24,16 @@ const createPlanet: RequestHandler = async (req: Request, res: Response) => {
   }
 };
 
-export { getPlanets, createPlanet };
+const deletePlanet: RequestHandler = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const response = await deletePlanetService(Number(id));
+    if (response === 0)
+      return res.status(404).json({ message: 'Planet not found' });
+    return res.json({ message: 'Planet deleted successfully' });
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export { getPlanets, createPlanet, deletePlanet };

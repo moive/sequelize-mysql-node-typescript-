@@ -8,4 +8,8 @@ const createPlanetService = async (data: any): Promise<any> => {
   return await Planet.create({ ...data });
 };
 
-export { getPlanetsService, createPlanetService };
+const deletePlanetService = async (id: number): Promise<any> => {
+  return await Planet.destroy({ where: { id } });
+};
+
+export { getPlanetsService, createPlanetService, deletePlanetService };
