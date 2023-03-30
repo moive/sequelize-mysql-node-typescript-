@@ -1,6 +1,9 @@
 import type { Request, RequestHandler, Response } from 'express';
 import type { Planet } from '../models/planet.model';
-import { getPlanetsService } from '../services/solarsys.service';
+import {
+  createPlanetService,
+  getPlanetsService
+} from '../services/solarsys.service';
 
 const getPlanets: RequestHandler = async (_req: Request, res: Response) => {
   try {
@@ -11,4 +14,13 @@ const getPlanets: RequestHandler = async (_req: Request, res: Response) => {
   }
 };
 
-export { getPlanets };
+const createPlanet: RequestHandler = async (req: Request, res: Response) => {
+  try {
+    const planet: Planet = await createPlanetService(req.body);
+    return res.json(planet);
+  } catch (error) {
+    return res.status(500).json({ message: 'Something went wrong', error });
+  }
+};
+
+export { getPlanets, createPlanet };

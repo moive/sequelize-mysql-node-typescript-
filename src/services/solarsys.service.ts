@@ -4,4 +4,8 @@ const getPlanetsService = async (): Promise<any> => {
   return await Planet.findAll();
 };
 
-export { getPlanetsService };
+const createPlanetService = async (data: any): Promise<any> => {
+  return await Planet.create({ ...data });
+};
+
+export { getPlanetsService, createPlanetService };
